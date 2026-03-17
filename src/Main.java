@@ -3,25 +3,19 @@ import java.awt.event.*;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.swing.*;
 
 public class Main extends JFrame{
-    ActionListener taskPerformer = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            mX = (int) mousePos.getX();
-            mY = (int) mousePos.getY();
-        }
-    };
-    Timer timer = new Timer(50, taskPerformer);
-//    timer
+
 
     static Toolkit toolkit = Toolkit.getDefaultToolkit();
     static int screenWidth = toolkit.getScreenSize().width;
     static int screenHeight = toolkit.getScreenSize().height;
 
-    static Point mousePos = MouseInfo.getPointerInfo().getLocation();
-    static int mX; static int mY;
+//    static Point mousePos = MouseInfo.getPointerInfo().getLocation();
+    public static int mX; public static int mY;
 
     static JFrame window = new JFrame("You can't close me!");
     static int windowWidth = 400; static int windowHeight = 300;
@@ -29,9 +23,27 @@ public class Main extends JFrame{
 
     static JButton closeButton = new JButton();
 
+
     public static void main(String[] args) {
-        mX = (int) mousePos.getX();
-        mY = (int) mousePos.getY();
+
+
+
+        Timer timer = new Timer();
+        TimerTask setMousePos = new TimerTask() {
+            @Override
+            public void run() {
+                PointerInfo pointerInfo = MouseInfo.getPointerInfo();
+                Point mousePos = pointerInfo.getLocation();
+                mX = (int) mousePos.getX();
+                mY = (int) mousePos.getY();
+                System.out.println(mX + " " + mY);
+            }
+        };
+        timer.schedule(setMousePos,0,100);
+
+
+//        mX = (int) mousePos.getX();
+//        mY = (int) mousePos.getY();
 
 
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -49,11 +61,11 @@ public class Main extends JFrame{
             public void mouseMoved(MouseEvent e) {
                 int winMX = e.getX() + windowX;
                 int winMY = e.getY() + windowY;
-                mX = (int) mousePos.getX();
-                mY = (int) mousePos.getY();
+//                mX = (int) mousePos.getX();
+//                mY = (int) mousePos.getY();
 
-                System.out.println(mX);
-//                System.out.println(windowX + ",  " + winMX + " " + winMY);
+//                System.out.println(mX);
+//                System.out.println(windowX + "," + windowY + " ;  " + winMX + "," + winMY);
                 if (winMX >= windowX + 5 && winMX <= windowX + 22){
                     System.out.println("aaaaaa");
                 }
@@ -64,9 +76,9 @@ public class Main extends JFrame{
         window.setVisible(true);
 
         while (true){
-            mX = (int) mousePos.getX();
-            mY = (int) mousePos.getY();
-            System.out.println(mX);
+//            mX = (int) mousePos.getX();
+//            mY = (int) mousePos.getY();
+//            System.out.println(mX);
 //            mX = (int) mousePos.getX();
 //            mY = (int) mousePos.getY();
 //
