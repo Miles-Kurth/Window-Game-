@@ -111,9 +111,10 @@ public class Main{
 
         window.setVisible(true);
 
-        while (true){
-
-        }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Quitting...");
+            moveWindow();
+        }));
 
     } //End main
 
@@ -145,4 +146,14 @@ public class Main{
         closeButton.setBounds(windowWidth - 90-2,windowHeight - 63-2,closeButtonWidth,closeButtonHeight);
     }
 
+
 }
+
+
+/*
+NOTES:
+- Mac "quit" uses code 0
+- Mac "force quit" uses code 143 (SIGTERM)
+
+
+ */
