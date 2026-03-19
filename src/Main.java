@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -107,7 +108,7 @@ public class Main{
 //        });
 
         //Button
-
+//        closeButton.setFont(Serif);
 
         window.setVisible(true);
 
