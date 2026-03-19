@@ -1,14 +1,20 @@
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Frame;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
+import java.awt.Toolkit;
+
+import java.awt.event.WindowStateListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowAdapter;
+
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JButton;
 
 
-public class Main extends JFrame{
+public class Main{
 
     //System
     static Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -27,7 +33,10 @@ public class Main extends JFrame{
     static int windowWidth = 400; static int windowHeight = 300;
     static int windowX = 250; static int windowY = 200;
 
-    static JButton closeButton = new JButton();
+    //Button
+    static JButton closeButton = new JButton("CLOSE");
+    static int closeButtonWidth = 90;
+    static int closeButtonHeight = 35;
 
 
     public static void main(String[] args) {
@@ -53,6 +62,12 @@ public class Main extends JFrame{
         };
         timer.schedule(periodic,0,50);
 
+
+        //Window
+        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        window.setBounds(windowX,windowY,windowWidth,windowHeight);
+        window.add(closeButton);
+
         window.addWindowStateListener(new WindowStateListener() {
             public void windowStateChanged(WindowEvent e) {
                 int newState = e.getNewState();
@@ -67,45 +82,41 @@ public class Main extends JFrame{
             }
         });
 
-
-
-        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        window.setBounds(windowX,windowY,windowWidth,windowHeight);
-
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-//                System.out.println("test");
+                System.out.println("Close detected!");
                 moveWindow();
             }
         });
-        window.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                int winMX = e.getX() + windowX;
-                int winMY = e.getY() + windowY;
-//                mX = (int) mousePos.getX();
-//                mY = (int) mousePos.getY();
+//        window.addMouseMotionListener(new MouseMotionAdapter() {
+//            @Override
+//            public void mouseMoved(MouseEvent e) {
+//                int winMX = e.getX() + windowX;
+//                int winMY = e.getY() + windowY;
+////                mX = (int) mousePos.getX();
+////                mY = (int) mousePos.getY();
+//
+////                System.out.println(mX);
+////                System.out.println(windowX + "," + windowY + " ;  " + winMX + "," + winMY);
+////                if (winMX >= windowX + 5 && winMX <= windowX + 22){
+////                    System.out.println("aaaaaa");
+////                }
+//
+//            }
+//        });
 
-//                System.out.println(mX);
-//                System.out.println(windowX + "," + windowY + " ;  " + winMX + "," + winMY);
-                if (winMX >= windowX + 5 && winMX <= windowX + 22){
-                    System.out.println("aaaaaa");
-                }
+        //Button
 
-            }
-        });
 
         window.setVisible(true);
 
         while (true){
 
         }
-    }
 
-    public static void checkMousePosition(int x, int y){
-        System.out.println(x + " " + y);
-    }
+    } //End main
+
 
     public static void moveWindow(){
         int newX = (int)(Math.random() * (screenWidth - windowWidth) );
@@ -113,6 +124,7 @@ public class Main extends JFrame{
         window.setBounds(newX,newY,windowWidth,windowHeight);
         windowX = window.getX();
         windowY = window.getY();
+        closeButton.setBounds(windowX - closeButtonWidth,windowY - closeButtonHeight,closeButtonWidth,closeButtonHeight);
     }
 
     public static void setOperatingSystemName(){
@@ -125,10 +137,12 @@ public class Main extends JFrame{
         else{
             operatingSystem = "other";
         }
+        System.out.println("Found operating system: " + operatingSystem);
     }
 
     public static void checkWindow(){
         window.setBounds(windowX,windowY,windowWidth,windowHeight);
+        closeButton.setBounds(windowWidth - 90-2,windowHeight - 63-2,closeButtonWidth,closeButtonHeight);
     }
 
 }
